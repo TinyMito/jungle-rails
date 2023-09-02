@@ -1,19 +1,25 @@
-<section class="users-index">
+<section class="sessions-new">
+
   <header class="page-header">
-    <div class="intro">
-      <h3>Register a new account!</h3>
-
-      <%= form_for :user, url: '/users' do |f| %>
-
-        <p>First Name: <%= f.text_field :first_name %></p>
-        <p>Last Name: <%= f.text_field :last_name %></p>
-        <p>Email: <%= f.text_field :email %></p>
-        <p>Password: <%= f.password_field :password %></p>
-        <p>Password Confirmation: <%= f.password_field :password_confirmation %></p>
-        <%= f.submit "Signup" %>
-      
-      <% end %>
-    </div>
+    <h1>Signup!</h1>
   </header>
+
+  <% if notice.present? %>
+    <div class="alert alert-success">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <%= form_for :user, url: '/users' do |f| %>
+
+    <p>First Name: <%= f.text_field :first_name %></p>
+    <p>Last Name: <%= f.text_field :last_name %></p>
+    <p>Email: <%= f.text_field :email %></p>
+    <p>Password: <%= f.password_field :password %></p>
+    <p>Password Confirmation: <%= f.password_field :password_confirmation %></p>
+    <%= f.submit "Signup" %>
+  
+  <% end %>
+
 
 </section>
