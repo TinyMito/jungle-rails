@@ -23,6 +23,16 @@ Use Credit Card # 4111 1111 1111 1111 for testing success scenarios.
 
 More information in their docs: <https://stripe.com/docs/testing#cards>
 
+## Admin Panel
+Username: Jungle
+Password: book
+
+## Normal User
+- Can signup
+- Can login
+- Can logout
+- Currently there are no page restriction for normal user as instructed.
+
 ## Dependencies
 
 - Rails 6.1 [Rails Guide](http://guides.rubyonrails.org/v6.1/)
