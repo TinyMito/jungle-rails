@@ -18,6 +18,8 @@ Rails.application.routes.draw do
     resources :categories, except: [:edit, :update, :show]
   end
 
+  resources :faq, only: [:index]
+  resources :help, only: [:index]
   resources :about, only: [:index]
 
   # Signup
