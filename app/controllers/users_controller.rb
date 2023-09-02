@@ -1,14 +1,15 @@
 class UsersController < ApplicationController
   def new
+    @user = User.new
   end
 
   def create
-    user = User.new(user_params)
-    if user.save
-      session[:user_id] = user.id # immediately set session
-      redirect_to '/'
+    @user = User.new(user_params)
+    if @user.save
+      session[:user_id] = @user.id # immediately set session
+      redirect_to root_path, notice: "User #{user_params[:email]} created successfully!"
     else # if signup fails
-      redirect_to '/signup', notice: 'Please fill in all the fields!'
+      render :new
     end
   end
 
