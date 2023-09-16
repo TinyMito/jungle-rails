@@ -6,8 +6,8 @@ RSpec.describe User, type: :model do
         first_name: "FirstName", 
         last_name: "LastName", 
         email: "test@test.com", 
-        password: 'pass123',
-        password_confirmation: 'pass123'
+        password: 'pass123pass123',
+        password_confirmation: 'pass123pass123'
         )
       expect(user).to be_valid
       expect(user.save).to be true
@@ -18,8 +18,8 @@ RSpec.describe User, type: :model do
         first_name: "FirstName", 
         last_name: "LastName", 
         email: "test@test.com", 
-        password: 'pass123',
-        password_confirmation: 'pass321'
+        password: 'pass123pass123',
+        password_confirmation: 'notthesamepassword'
         )
       expect(user).to_not be_valid
       expect(user.errors.full_messages).to eq ["Password confirmation doesn't match Password"]
@@ -31,10 +31,10 @@ RSpec.describe User, type: :model do
         last_name: "LastName", 
         email: "test@test.com", 
         password: nil,
-        password_confirmation: 'pass123'
+        password_confirmation: 'pass123pass123'
         )
       expect(user).to_not be_valid
-      expect(user.errors.full_messages).to eq ["Password can't be blank"]
+      expect(user.errors.full_messages).to eq ["Password can't be blank", "Password can't be blank", "Password is too short (minimum is 10 characters)"]
     end
 
     it 'is not valid first name is missing' do
@@ -42,8 +42,8 @@ RSpec.describe User, type: :model do
         first_name: nil, 
         last_name: "LastName", 
         email: "test@test.com", 
-        password: 'pass123',
-        password_confirmation: 'pass123'
+        password: 'pass123pass123',
+        password_confirmation: 'pass123pass123'
         )
       expect(user).to_not be_valid
       expect(user.errors.full_messages).to eq ["First name can't be blank"]
@@ -54,8 +54,8 @@ RSpec.describe User, type: :model do
         first_name: "FirstName", 
         last_name: nil, 
         email: "test@test.com", 
-        password: 'pass123',
-        password_confirmation: 'pass123'
+        password: 'pass123pass123',
+        password_confirmation: 'pass123pass123'
         )
       expect(user).to_not be_valid
       expect(user.errors.full_messages).to eq ["Last name can't be blank"]
@@ -66,8 +66,8 @@ RSpec.describe User, type: :model do
         first_name: "FirstName", 
         last_name: "LastName", 
         email: nil, 
-        password: 'pass123',
-        password_confirmation: 'pass123'
+        password: 'pass123pass123',
+        password_confirmation: 'pass123pass123'
         )
       expect(user).to_not be_valid
       expect(user.errors.full_messages).to eq ["Email can't be blank"]
@@ -78,18 +78,30 @@ RSpec.describe User, type: :model do
         first_name: "FirstName2", 
         last_name: "LastName2", 
         email: "TEST@TEST.com", 
-        password: 'pass321',
-        password_confirmation: 'pass321'
+        password: 'pass321pass321',
+        password_confirmation: 'pass321pass321'
       )
       user = User.new(
         first_name: "FirstName1", 
         last_name: "LastName1", 
         email: "test@test.com", 
+        password: 'pass123pass123',
+        password_confirmation: 'pass123pass123'
+        )
+      expect(user).to_not be_valid
+      expect(user.errors.full_messages).to eq ["Email has already been taken"]
+    end
+
+    it 'is not valid password did not meet length requirement of 10' do
+      user = User.new(
+        first_name: "FirstName", 
+        last_name: "LastName", 
+        email: "test@test.com", 
         password: 'pass123',
         password_confirmation: 'pass123'
         )
       expect(user).to_not be_valid
-      expect(user.errors.full_messages).to eq ["Email has already been taken"]
+      expect(user.errors.full_messages).to eq ["Password is too short (minimum is 10 characters)"]
     end
   end
 end
