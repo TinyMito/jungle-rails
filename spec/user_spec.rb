@@ -89,6 +89,7 @@ RSpec.describe User, type: :model do
         password_confirmation: 'pass123'
         )
       expect(user).to_not be_valid
+      expect(user.errors.full_messages).to eq ["Email has already been taken"]
     end
   end
 end
