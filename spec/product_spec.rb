@@ -25,5 +25,12 @@ RSpec.describe Product, type: :model do
       expect(product).to_not be_valid
       expect(product.errors.full_messages).to eq ["Category must exist", "Category can't be blank"]
     end
+
+    it 'saves successfully with good values' do
+      category = Category.new(name: "Test Category")
+      product = Product.new(name: "Test", price: 99, quantity: 99, category: category)
+      expect(product).to be_valid
+      expect(product.save).to be true
+    end
   end
 end
