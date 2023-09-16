@@ -7,11 +7,12 @@ class SessionsController < ApplicationController
     @session = Session.new(session_params) # set params
 
     if @session.valid? # if it is not nil
-      user = User.find_by(email: @session.email) # look up User db email
-      if user && user.authenticate(session_params[:password]) # check user password hash match input
-        session[:user_id] = user.id # set user id to session
+      if user = User.authenticate_with_credentials(params[:email], params[:password])
+        # success logic, log them in
+        session[:user_id] = user.id
         redirect_to '/', notice: "User #{session_params[:email]} logged in successfully!"
-      else # if fails the hash check
+      else
+        # failure, render login form
         @session.errors.add(:base, 'Wrong email or password, please try again!')
         render :new
       end
